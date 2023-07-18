@@ -33,10 +33,11 @@ public class EmployeeController {
         }
         String formattedFirstName = StringUtils.capitalize(firstName);
         String formattedLastName = StringUtils.capitalize(lastName);
-        Employee employee = new Employee();
-        employee.setFirstName(formattedFirstName);
-        employee.setLastName(formattedLastName);
+
         try {
+            Employee employee = new Employee();
+            employee.setFirstName(formattedFirstName);
+            employee.setLastName(formattedLastName);
 
             employeeService.addEmployee(employee);
             return ResponseEntity.ok(employee);
