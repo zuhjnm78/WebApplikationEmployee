@@ -1,9 +1,11 @@
 package ru.skypro.webapplikationemployee.controller;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import ru.skypro.webapplikationemployee.exception.EmployeeNotFoundException;
 import ru.skypro.webapplikationemployee.service.Employee;
 import ru.skypro.webapplikationemployee.exception.EmployeeAlreadyAddedException;
@@ -24,13 +26,18 @@ public class EmployeeController {
     @GetMapping("/add")
     @NonNull
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity addEmployee(@RequestParam(required = false) String firstName,
-                                      @RequestParam(required = false) String lastName) {
-        if (firstName == null || lastName == null) {
-            return ResponseEntity.badRequest().body("Both 'firstName' and 'lastName' parameters are required.");
+    public ResponseEntity addEmployee(@RequestParam String firstName,
+                                      @RequestParam String lastName) {
+        if (StringUtils.isAnyBlank(firstName, lastName)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid input: first name and last name are required");
         }
+        String formattedFirstName = StringUtils.capitalize(firstName);
+        String formattedLastName = StringUtils.capitalize(lastName);
+        Employee employee = new Employee();
+        employee.setFirstName(formattedFirstName);
+        employee.setLastName(formattedLastName);
         try {
-            Employee employee = new Employee(firstName, lastName);
+
             employeeService.addEmployee(employee);
             return ResponseEntity.ok(employee);
         } catch (EmployeeStorageIsFullException e) {
@@ -46,13 +53,15 @@ public class EmployeeController {
     @GetMapping("/remove")
     @NonNull
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity removeEmployee(@RequestParam(required = false) String firstName,
-                                                   @RequestParam(required = false) String lastName) {
-        if (firstName == null || lastName == null) {
-            return ResponseEntity.badRequest().body("Both 'firstName' and 'lastName' parameters are required.");
+    public ResponseEntity removeEmployee(@RequestParam String firstName,
+                                         @RequestParam String lastName) {
+        if (StringUtils.isAnyBlank(firstName, lastName)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid input: first name and last name are required");
         }
+        String formattedFirstName = StringUtils.capitalize(firstName);
+        String formattedLastName = StringUtils.capitalize(lastName);
         try {
-            Employee employee = employeeService.removeEmployee(firstName, lastName);
+            Employee employee = employeeService.removeEmployee(formattedFirstName,formattedLastName);
             return ResponseEntity.ok(employee);
         } catch (EmployeeNotFoundException e) {
             System.err.println(e.getMessage());
@@ -63,13 +72,15 @@ public class EmployeeController {
     @GetMapping("/find")
     @NonNull
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity findEmployee(@RequestParam(required = false) String firstName,
-                                                 @RequestParam(required = false) String lastName) {
-        if (firstName == null || lastName == null) {
-            return ResponseEntity.badRequest().body("Both 'firstName' and 'lastName' parameters are required.");
+    public ResponseEntity findEmployee(@RequestParam String firstName,
+                                       @RequestParam String lastName) {
+        if (StringUtils.isAnyBlank(firstName, lastName)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid input: first name and last name are required");
         }
+        String formattedFirstName = StringUtils.capitalize(firstName);
+        String formattedLastName = StringUtils.capitalize(lastName);
         try {
-            Employee employee = employeeService.findEmployee(firstName, lastName);
+            Employee employee = employeeService.findEmployee(formattedFirstName, formattedLastName);
             return ResponseEntity.ok(employee);
         } catch (EmployeeNotFoundException e) {
             System.err.println(e.getMessage());

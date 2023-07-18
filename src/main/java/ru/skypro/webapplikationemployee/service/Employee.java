@@ -21,6 +21,14 @@ public class Employee {
         return lastName;
     }
 
+    public void setFirstName(String formattedFirstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String formattedLastName) {
+        this.lastName = lastName;
+    }
+
     public Employee(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -31,7 +39,7 @@ public class Employee {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Employee employee = (Employee) o;
-        return Objects.equals(firstName, employee.firstName) && Objects.equals(lastName, employee.lastName);
+        return firstName.equals(employee.firstName) && lastName.equals(employee.lastName);
     }
 
     @Override
@@ -39,3 +47,4 @@ public class Employee {
         return Objects.hash(firstName, lastName);
     }
 }
+
