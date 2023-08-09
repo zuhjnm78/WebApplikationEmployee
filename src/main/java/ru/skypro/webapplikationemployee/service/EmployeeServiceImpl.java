@@ -12,19 +12,23 @@ import java.util.List;
 public class EmployeeServiceImpl implements EmployeeService {
     private Employee employee = new Employee();
 
-    public List<Employee> employees = new ArrayList<>(List.of(
-            new Employee("Ivan", "Ivanov"),
-            new Employee("Vladimir", "Varlamov"),
-            new Employee("Ilya", "Vedeneev"),
-            new Employee("Gennadi", "Davydow"),
-            new Employee("Vitaly", "Dolgov"),
-            new Employee("Ivanov", "Gregory"),
-            new Employee("Vladislav", "Kartashov"),
-            new Employee("Constantin","Makarov"),
-            new Employee("Nikita", "Panfilov"),
-            new Employee("Pavel","Teterin")
-    ));
+    public List<Employee> employees;
     private static final int MAX_EMPLOYEES = 50;
+
+    public EmployeeServiceImpl() {
+        employees = new ArrayList<>(List.of(
+                new Employee("Ivan", "Ivanov"),
+                new Employee("Vladimir", "Varlamov"),
+                new Employee("Ilya", "Vedeneev"),
+                new Employee("Gennadi", "Davydow"),
+                new Employee("Vitaly", "Dolgov"),
+                new Employee("Ivanov", "Gregory"),
+                new Employee("Vladislav", "Kartashov"),
+                new Employee("Constantin","Makarov"),
+                new Employee("Nikita", "Panfilov"),
+                new Employee("Pavel","Teterin")
+        ));
+    }
 
     @Override
     public void addEmployee(Employee employee) {

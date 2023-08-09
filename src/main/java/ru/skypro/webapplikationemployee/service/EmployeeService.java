@@ -3,6 +3,7 @@ package ru.skypro.webapplikationemployee.service;
 import java.util.List;
 
 public interface EmployeeService {
+    static final int MAX_EMPLOYEES = 50;
 
     void addEmployee(Employee employee);
 
